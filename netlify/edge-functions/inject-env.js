@@ -6,16 +6,22 @@ export default async (request, context) => {
   }
 
   const html = await response.text();
+  const getEnv = (name) => {
+    const fromNetlify = globalThis.Netlify?.env?.get?.(name);
+    if (fromNetlify) return fromNetlify;
+    const fromDeno = globalThis.Deno?.env?.get?.(name);
+    return fromDeno || "";
+  };
 
   const injected = html.replaceAll(
     "/__SUPABASE_URL__/",
-    Deno.env.get("SUPABASE_URL") ?? ""
+    getEnv("SUPABASE_URL") || "/__SUPABASE_URL__/"
   ).replaceAll(
     "/__SUPABASE_KEY__/",
-    Deno.env.get("SUPABASE_PUB_KEY") ?? ""
+    getEnv("SUPABASE_PUB_KEY") || "/__SUPABASE_KEY__/"
   ).replaceAll(
     "/__RAZORPAY_KEY_ID__/",
-    Deno.env.get("RAZORPAY_KEY_ID") ?? ""
+    getEnv("RAZORPAY_KEY_ID") || "/__RAZORPAY_KEY_ID__/"
   );
 
   return new Response(injected, {
