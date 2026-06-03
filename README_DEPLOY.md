@@ -80,6 +80,8 @@ The Netlify functions are configured in `netlify.toml`.
 
 There is no build command and no required npm dependency. The Razorpay backend uses Razorpay's HTTPS API directly through Netlify Functions.
 
+Set `manovex.in` as the primary production domain in Netlify. Keep `www.manovex.in` and the Netlify subdomain on the same site so the redirects in `netlify.toml` can send them to `https://manovex.in`.
+
 ## Netlify Environment Variables
 
 Add these in Netlify Site settings:
@@ -92,11 +94,43 @@ Add these in Netlify Site settings:
 
 For test checkout, use Razorpay test keys. For real subscribers, replace them with Razorpay live keys after KYC approval.
 
+## Final Domain Settings
+
+After `manovex.in` is connected to the new Netlify site, use these production values in external dashboards.
+
+Supabase Authentication URL Configuration:
+
+- Site URL: `https://manovex.in`
+- Redirect URL: `https://manovex.in`
+- Redirect URL: `https://manovex.in/**`
+- Redirect URL: `https://www.manovex.in`
+- Redirect URL: `https://www.manovex.in/**`
+
+Google OAuth client:
+
+- Authorized JavaScript origin: `https://manovex.in`
+- Authorized JavaScript origin: `https://www.manovex.in`
+- Authorized redirect URI: `https://YOUR_SUPABASE_PROJECT.supabase.co/auth/v1/callback`
+
+For this current Supabase project, the callback is:
+
+```text
+https://thaiteyodtmkklleelyv.supabase.co/auth/v1/callback
+```
+
+Razorpay website/liveness URL:
+
+```text
+https://manovex.in
+```
+
 ## After Deploy
 
 Check these URLs:
 
 - `https://manovex.in`
+- `https://www.manovex.in`
+- your Netlify subdomain, which should redirect to `https://manovex.in`
 - `https://manovex.in/.netlify/functions/create-order`
 
 The function URL should not show a Netlify 404 page. `Method not allowed` is acceptable when opened directly in the browser because the function expects a POST request.

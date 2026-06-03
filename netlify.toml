@@ -4,6 +4,18 @@
   edge_functions = "netlify/edge-functions"
 
 [[redirects]]
+  from = "https://manovex1.netlify.app/*"
+  to = "https://manovex.in/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.manovex.in/*"
+  to = "https://manovex.in/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/api/create-order"
   to = "/.netlify/functions/create-order"
   status = 200
