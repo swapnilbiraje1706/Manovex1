@@ -112,12 +112,6 @@ Google OAuth client:
 - Authorized JavaScript origin: `https://www.manovex.in`
 - Authorized redirect URI: `https://YOUR_SUPABASE_PROJECT.supabase.co/auth/v1/callback`
 
-For this current Supabase project, the callback is:
-
-```text
-https://thaiteyodtmkklleelyv.supabase.co/auth/v1/callback
-```
-
 Razorpay website/liveness URL:
 
 ```text
